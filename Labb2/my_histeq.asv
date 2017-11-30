@@ -1,0 +1,37 @@
+function equalized_im_hist = my_histeq(im_in)
+    % im_out = my_histeq(im_in) performs a histogram equalization on the
+    % input image im_in and returns the result in im_out
+    % both input and output image are intensity images (values from 0 to
+    % 255)
+    [rows, columns] = size(im_in);
+    pixels_tot = rows * columns;
+    im_hist = my_hist(im_in);
+    normalized_im_hist = zeros(1,256);
+    equalized_im_hist = zeros(1,256);
+    transform_im_hist = zeros(1,256);
+    
+    for i = 1:256
+        for j = 1:i
+            transform_im_hist(i) = transform_im_hist(i) + im_hist(j);
+        end
+        normalized_im_hist(i) = im_hist(i) * (1/pixels_tot);
+    end
+    normalized_im_hist = round(normalized_im_hist * 255);
+    
+    for h = 1:max(normalized_im_hist)
+        for k = 1:256
+            %pick the position of all values that are equal to 0 and place
+            %the sum of all the pixels togather in position 1
+            if normalized_im_hist(k) == 0
+                equalized_im_hist(1) = equalized_im_hist(1) + im_hist(k);
+            end
+            %pick the position of all values that are equal to j and place
+            %the sum of all the pixels togather in position j+1
+            if normalized_im_hist(k) == h
+                equalized_im_hist(h+1) = equalized_im_hist(h+1) + im_hist(k);
+            end
+        end
+    end
+    equalized_im_hist = equalized_im_hist * (1/pixels_tot);
+end
+

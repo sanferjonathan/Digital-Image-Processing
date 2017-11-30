@@ -1,0 +1,2 @@
+X = imread('mandrill.tif');
+
