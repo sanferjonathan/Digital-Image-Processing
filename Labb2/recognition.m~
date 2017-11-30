@@ -1,15 +1,15 @@
 function recognition(imnum)
-%   ubuntu path = '/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/query/QueryImage%i.jpg';
-%   windows path = 'C:\\Users\\Jonathan\\Documents\\MATLAB\\Labb2\\recognition\\database\\QueryImage%i.jpg';
-    I1 = rgb2gray(imread(sprintf('/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/query/QueryImage%i.jpg',imnum)));
+%     '/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/query/QueryImage%i.jpg';
+%     'C:\\Users\\Jonathan\\Documents\\MATLAB\\Labb2\\recognition\\database\\QueryImage%i.jpg';
+    I1 = rgb2gray(imread(sprintf('C:\\Users\\Jonathan\\Documents\\MATLAB\\Labb2\\recognition\\query\\QueryImage%i.jpg',imnum)));
     pts1 = detectSURFFeatures(I1);
     [feats1,validPts1] = extractFeatures(I1,pts1);
     maxSum = 0;
     
-%   ubuntu path = '/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/database/DatabaseImage%i.jpg';
-%   windows path = 'C:\\Users\\Jonathan\\Documents\\MATLAB\\Labb2\\recognition\\database\\DatabaseImage%i.jpg';
+%     '/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/database/DatabaseImage%i.jpg';
+%     'C:\\Users\\Jonathan\\Documents\\MATLAB\\Labb2\\recognition\\database\\DatabaseImage%i.jpg';
     for i = 1:20
-        I2 = rgb2gray(imread(sprintf('/home/jonathan/Schoolwork/MATLAB/Labb2/recognition/database/DatabaseImage%i.jpg',i)));
+        I2 = rgb2gray(imread(sprintf(windowsPath,i)));
         pts2 = detectSURFFeatures(I2);
         [feats2,validPts2] = extractFeatures(I2,pts2);
         % match feature sets from 2 images

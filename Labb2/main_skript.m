@@ -167,7 +167,7 @@ matchedPoints2 = validPts2(indexPairs(:, 2));
 showMatchedFeatures(I1,I2,matchedPoints1,matchedPoints2,'montage')
 %%
 % 3.4 Image Matching
-recognition(2);
+recognition(4);
 
 
 
