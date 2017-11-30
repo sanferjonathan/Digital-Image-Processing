@@ -64,15 +64,12 @@ title('original')
 f = im2double(imread('clown.tif'));
 gauss_mask3x3 = [0.0625 0.125 0.0625; 0.125 0.25 0.125; 0.0625 0.125 0.0625];
 gauss_mask5x5 = [0.03125 0.0625 0.125 0.0625 0.03125; 0.0625 0.125 0.25 0.125 0.0625; 0.125 0.25 0.5 0.25 0.125; 0.0625 0.125 0.25 0.125 0.0625; 0.03125 0.0625 0.125 0.0625 0.03125];
-gauss_mask7x7 = [ 0 0 0 5 0 0 0; 0 5 18 32 18 5 0; 0 18 64 100 64 18 0; 5 32 100 100 100 32 5; 0 18 64 100 64 18 0; 0 5 18 32 18 5 0; 0 0 0 5 0 0 0];
 mean_mask9x9 = ones(9) * 1/81;
 mean_mask5x5 = ones(5) * 1/25;
 mean_mask3x3 = ones(3) * 1/9;
 
 n = sum(gauss_mask5x5(:));
 gauss_mask5x5 = gauss_mask5x5 * 1/n;
-n = sum(gauss_mask7x7(:));
-gauss_mask7x7 = gauss_mask7x7 * 1/n;
 
 g = my_conv(f, gauss_mask3x3);
 g2 = my_conv(f, gauss_mask5x5);
@@ -112,14 +109,17 @@ sobel_horizontal_edge_mask3x3 = [-1 -2 -1; 0 0 0; 1 2 1];
 sobel_vertical_edge_mask3x3 = [-1 0 1; -2 0 2; -1 0 1];
 sobel_edge_mask3x3 = sobel_horizontal_edge_mask3x3 + sobel_vertical_edge_mask3x3;
 
-g = my_conv(f, sobel_edge_mask3x3);
+% g = my_conv(f, sobel_edge_mask3x3);
+g = my_conv(f, sobel_horizontal_edge_mask3x3);
+g1 = my_conv(g, sobel_vertical_edge_mask3x3);
 g2 = my_conv(f, laplacian_mask3x3);
+
 figure;
 subplot(1,3,1)
 imshow(f);
 title('original image')
 subplot(1,3,2)
-imshow(g);
+imshow(g1);
 title('sobel edge mask 3x3 image')
 subplot(1,3,3)
 imshow(g2);
@@ -146,9 +146,7 @@ hold off;
 % extract SURF descriptors
 I = imread('boat.tif');
 pts = detectSURFFeatures(I,'MetricThreshold',1000.0,'NumOctaves',3,'NumScaleLevels',4);
-pts
 [feats,validPts] = extractFeatures(I,pts);
-validPts
 
 %%
 % 3.3 Feature Matching
@@ -167,11 +165,9 @@ indexPairs = matchFeatures(feats1,feats2);
 matchedPoints1 = validPts1(indexPairs(:, 1));
 matchedPoints2 = validPts2(indexPairs(:, 2));
 showMatchedFeatures(I1,I2,matchedPoints1,matchedPoints2,'montage')
-
 %%
 % 3.4 Image Matching
-
-
+recognition(2);
 
 
 
