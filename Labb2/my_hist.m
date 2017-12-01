@@ -9,9 +9,9 @@ function hist_array = my_hist(im)
     
     for i = 1:rows
         for j = 1:columns
-            hist_array(1,im(i,j)+1) = hist_array(1,im(i,j)+1) + 1;
+            hist_array(im(i,j)+1) = hist_array(im(i,j)+1) + 1;
         end
     end
-    
+end 
     
     
