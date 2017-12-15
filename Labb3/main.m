@@ -39,16 +39,16 @@ f_imM = fft2(im_m);
 
 R1 = abs(f_imM);
 theta1 = angle(f_imM);
-com = cos(theta1) .* R1 + sin(theta1) .* R1 .* 1i;
-im1 = vec2mat(com,256);
+com1 = cos(theta1) .* R1 + sin(theta1) .* R1 .* 1i;
+im1 = reshape(com1,[256,256]);
 
 
 R2 = abs(f_imC);
 theta2 = angle(f_imC);
-com = cos(theta2) .* R1 + sin(theta2) .* R1 .* 1i;
-im2 = vec2mat(com,256);
+com2 = cos(theta2) .* R1 + sin(theta2) .* R1 .* 1i;
+im2 = reshape(com2,[256,256]);
 
-im3 = ifft2(im2);
+im3 = abs(ifft2(im2));
 
 imshow(im3);
 
